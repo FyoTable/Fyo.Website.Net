@@ -1,0 +1,297 @@
+html,body, #react-app {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Open Sans', sans-serif;
+    background-color: #ebf2f6;
+}
+
+.react-app-container.preload, .react-app-container.preload * {
+    animation-duration: 0s !important;
+    -webkit-animation-duration: 0s !important;
+    transition:background-color 0s, opacity 0s, color 0s, width 0s, height 0s, padding 0s, margin 0s !important;
+}
+
+.main-nav li .glyphicon {
+    margin-right: 10px;
+}
+
+.react-app-container {
+    height: 100%;
+}
+
+/* Highlighting rules for nav menu items */
+.side-nav li a {
+    color: #a0abbf;
+}
+.side-nav li a.active,
+.side-nav li a.active:hover,
+.side-nav li a.active:focus {
+    color: #b1bccf;
+    font-weight: bold;
+}
+
+.side-nav-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20%;
+    height: 100%;
+}
+
+.side-nav {
+    height: 100%;
+    width: 100%;
+    color: #c9d0de;
+}
+.side-nav .navbar-inverse {
+    background-color: #354053;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+}
+.side-nav h3 {
+    color: #64738e;
+    font-size: 14px;
+    margin: 15px 20px;
+}
+.side-nav .navbar {
+    border-radius: 0px;
+    border-width: 0px;
+    height: 100%;
+}
+.side-nav .navbar-header {
+    float: none;
+}
+.side-nav .navbar-collapse {
+    border-top: 1px solid #444;
+    padding: 0px;
+}
+.side-nav .navbar ul {
+    float: none;
+}
+.side-nav .navbar li {
+    float: none;
+    font-size: 14px;
+}
+.side-nav .navbar li a {
+    border-radius: 4px;
+    display: inline-block;
+    padding: 10px 17px;
+    border-left: 3px solid #30394b;
+    border-radius: 0;
+}
+
+.side-nav li a.active {
+    text-decoration: none;
+    color: #b1bccf;
+    background-color: #2f3849;
+}
+
+.side-nav li a:hover {
+    text-decoration: none;
+    color: #b1bccf;
+    border-left: 3px solid #00a2fd;
+    background-color: #2f3849;
+}
+
+.side-nav .navbar a {
+    /* If a menu item's text is too long, truncate it */
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.side-nav .navbar a .glyphicon {
+    padding-right: 10px;
+}
+
+.separator {
+    width: 100%;
+    height: 5px;
+    margin: 20px 0;
+    background-color: #30394b;
+    border-top: 1px solid #293242;
+    border-bottom: 1px solid #3c485e;
+}
+.separator .separator-inner {
+    background-color: #293242;
+    height: 1px;
+    width: 100%;
+}
+
+
+.profile-image {
+    width: 40%;
+    margin: 40px auto 15px auto;
+}
+.profile-image img {
+    width: 100%;
+    border-radius: 100%;
+}
+.profile-menu {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.profile-menu .glyphicon {
+    font-size: 0.75em;
+}
+
+@media (max-width: 767px) {
+
+
+        
+    @keyframes sideNavOpen {
+        0%   { left: -50% }
+        100% { left: 0;}
+    }
+    @keyframes sideNavClose {
+        0%   { left: 0; }
+        100% { left: -50%;}
+    }
+    @keyframes bodyOpen {
+        0%   { padding-left: 0% }
+        100% { padding-left: 50%;}
+    }
+    @keyframes bodyClose {
+        0%   { padding-left: 50% }
+        100% { padding-left: 0%;}
+    }
+
+    .react-app-container {
+        padding-left: 50%;
+        animation: bodyOpen;
+        animation-duration: 0.5s;
+    }
+    .side-nav-container {
+        width: 50%;
+        animation: sideNavOpen;
+        animation-duration: 0.5s;
+    }
+
+    .react-app-container.full {
+        padding-left: 0;
+        animation: bodyClose;
+        animation-duration: 0.5s;
+    }
+    .react-app-container.full .side-nav-container {
+        left: -50%;
+        animation: sideNavClose;
+        animation-duration: 0.5s;
+    }
+
+}
+
+@media (min-width: 768px) {
+        
+    @keyframes sideNavOpen {
+        0%   { left: -20% }
+        100% { left: 0;}
+    }
+    @keyframes sideNavClose {
+        0%   { left: 0; }
+        100% { left: -20%;}
+    }
+    @keyframes bodyOpen {
+        0%   { padding-left: 0% }
+        100% { padding-left: 20%;}
+    }
+    @keyframes bodyClose {
+        0%   { padding-left: 20% }
+        100% { padding-left: 0%;}
+    }
+
+    .react-app-container {
+        padding-left: 20%;
+        animation: bodyOpen;
+        animation-duration: 0.5s;
+    }
+    .side-nav-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 20%;
+        animation: sideNavOpen;
+        animation-duration: 0.5s;
+    }
+
+    .react-app-container.full {
+        padding-left: 0;
+        animation: bodyClose;
+        animation-duration: 0.5s;
+    }
+    .react-app-container.full .side-nav-container {
+        left: -20%;
+        animation: sideNavClose;
+        animation-duration: 0.5s;
+    }
+}
+
+.top-nav {
+    background-color: #fff;
+}
+
+.top-nav .no-border {
+    border: none;
+    border-radius: 0;
+    /* margin-left: -30px; */
+}
+
+.top-nav-row {
+    border-bottom: 1px solid #ccc;
+    font-size: 18px;
+    color: #9ba3b0;
+    text-decoration: none;
+}
+
+.top-nav-row a {
+    color: #9ba3b0;
+}
+.top-nav-row .box {
+    padding: 20px;
+    border-right: 1px solid #ccc;
+    display: inline-block;
+    cursor: pointer;
+}
+.top-nav-row .box:hover, .top-nav-row .box:hover a {
+    background-color: #00a2fd;
+    color: #fff;
+}
+.top-nav-right {
+    text-align: right;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+}
+
+.top-nav-right .box {
+    border-right: 0px solid #ccc;
+    border-left: 1px solid #ccc;
+}
+
+.content-header {
+    background-color: #fff;
+    min-height: 150px;
+    border-bottom: 1px solid #ccc;
+    padding: 15px 0;
+}
+.content-body {
+    padding: 15px 0;
+}
+.content-container {
+    margin: 15px 30px;
+}
+
+.landing {
+    color: #fff;
+    background-color: #373942;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    padding: 50px;
+}
+.landing .login {
+    margin: 50px;
+}
