@@ -102,7 +102,7 @@ namespace Fyo
             {
                 app.UseExceptionHandler("/Home/Error");
 
-                var options = new RewriteOptions().AddRedirectToHttps();
+                var options = new RewriteOptions();//.AddRedirectToHttps();
 
                 app.UseRewriter(options);
             }
