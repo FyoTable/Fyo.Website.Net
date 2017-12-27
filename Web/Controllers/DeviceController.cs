@@ -15,7 +15,7 @@ namespace Fyo.Controllers
     public class DeviceController : Controller
     {
         private IDeviceService _deviceService;
-
+        
         public DeviceController(IDeviceService deviceService) {
             _deviceService = deviceService;
         }
@@ -37,6 +37,7 @@ namespace Fyo.Controllers
 
         [HttpPost]
         public IActionResult Create([FromBody] Device device){
+            device.UniqueIdentifier = Guid.NewGuid();
             var newDevice = _deviceService.Create(device);
 
             return new OkObjectResult(newDevice);
@@ -58,5 +59,6 @@ namespace Fyo.Controllers
 
             return new OkObjectResult(updatedDevice);
         }
+
     }
 }

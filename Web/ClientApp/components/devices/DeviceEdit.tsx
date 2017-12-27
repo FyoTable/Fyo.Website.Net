@@ -9,6 +9,7 @@ import { TopNavMenu } from '../navigation/TopNavMenu';
 
 export class DeviceEdit extends React.Component<RouteComponentProps<EditProps>, EditState<Device>>{
     private deviceDataService = new DeviceDataService();
+    private isConnected: boolean = false;
 
     constructor(props: RouteComponentProps<EditProps>){
         super(props);
@@ -23,8 +24,13 @@ export class DeviceEdit extends React.Component<RouteComponentProps<EditProps>, 
 
         if(id){
             this.deviceDataService.get(id).then((device: Device) => {
+                console.log(device);
                 this.setState({ originalEntity: device });
-            })
+
+                this.deviceDataService.isConnected(device.uniqueIdentifier).then((state: boolean) => {
+                    this.isConnected = state;
+                })
+            });
         }
     }
 
@@ -54,22 +60,26 @@ export class DeviceEdit extends React.Component<RouteComponentProps<EditProps>, 
             
             <div className="content-body">
                 <div className="content-container">
-                <Form defaultValues={this.state.originalEntity} onSubmit={submittedValues => this.save(submittedValues)}>
-                    {formApi => (
-                        <form onSubmit={formApi.submitForm} id="entityForm">
-                            <div className="form-group">
-                                <label htmlFor="name">Name</label>
-                                <Text className="form-control" field="name" id="name" />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="code">Code</label>
-                                <Text className="form-control" field="code" id="code" />
-                            </div>
+                    <div className="form-group">
+                        <label htmlFor="name">Is Connected: { this.isConnected ? 'Yes' : 'No' }</label>
+                    </div>
 
-                            <button type="submit" className="btn btn-primary">Submit</button>
-                        </form>
-                    )}
-                </Form>
+                    <Form defaultValues={this.state.originalEntity} onSubmit={submittedValues => this.save(submittedValues)}>
+                        {formApi => (
+                            <form onSubmit={formApi.submitForm} id="entityForm">
+                                <div className="form-group">
+                                    <label htmlFor="name">Name</label>
+                                    <Text className="form-control" field="name" id="name" />
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="code">Unique Identifier</label>
+                                    <Text className="form-control" field="uniqueIdentifier" id="uniqueIdentifier" />
+                                </div>
+
+                                <button type="submit" className="btn btn-primary">Submit</button>
+                            </form>
+                        )}
+                    </Form>
                 </div>
             </div>
             </div>)

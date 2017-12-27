@@ -15,7 +15,7 @@ namespace Fyo.Controllers
         }
         
         [Route("/portal")]
-        [Route("/portal/callback")]
+        [Route("/portal/{*url}")]
         public IActionResult Portal()
         {
             return View();
