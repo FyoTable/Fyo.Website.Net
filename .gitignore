@@ -238,3 +238,6 @@ _Pvt_Extensions
 
 # VS Code directory
 .vscode/
+
+
+appsettings.Development.json

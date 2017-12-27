@@ -16,6 +16,6 @@ namespace Fyo.Models {
         public string WirelessAccessPointIP { get; set; }
         public string IPAddress { get; set; }
 
-		List<DeviceSoftware> DeviceSoftware { get; set; }
+		List<DeviceSoftwareVersion> DeviceSoftwareVersions { get; set; }
     }
 }

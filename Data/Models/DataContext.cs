@@ -11,11 +11,12 @@ namespace Fyo.Models{
 
         public DbSet<Device> Devices { get; set; }
         public DbSet<Software> Software { get; set; }
-        public DbSet<DeviceSoftware> DeviceSoftwares { get; set; }
+        public DbSet<SoftwareVersion> SoftwareVersions { get; set; }
+        public DbSet<DeviceSoftwareVersion> DeviceSoftwareVersions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<DeviceSoftware>().HasKey(ds => new { ds.DeviceId, ds.SoftwareId });
+            modelBuilder.Entity<DeviceSoftwareVersion>().HasKey(ds => new { ds.DeviceId, ds.SoftwareVersionId });
         }
         
     }

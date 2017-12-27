@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Fyo.Migrations
 {
-    public partial class Initial : Migration
+    public partial class RecreatingInitialBecauseOfComplexity : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -34,13 +34,9 @@ namespace Fyo.Migrations
                 {
                     ID = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    APK = table.Column<string>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     ModifiedDate = table.Column<DateTime>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    URL = table.Column<string>(nullable: true),
-                    UniqueID = table.Column<string>(nullable: true),
-                    Version = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -67,45 +63,77 @@ namespace Fyo.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "DeviceSoftwares",
+                name: "SoftwareVersions",
                 columns: table => new
                 {
-                    DeviceId = table.Column<long>(nullable: false),
-                    SoftwareId = table.Column<long>(nullable: false)
+                    ID = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    APK = table.Column<string>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    ModifiedDate = table.Column<DateTime>(nullable: false),
+                    SoftwareID = table.Column<long>(nullable: true),
+                    URL = table.Column<string>(nullable: true),
+                    Version = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DeviceSoftwares", x => new { x.DeviceId, x.SoftwareId });
+                    table.PrimaryKey("PK_SoftwareVersions", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_DeviceSoftwares_Devices_DeviceId",
+                        name: "FK_SoftwareVersions_Software_SoftwareID",
+                        column: x => x.SoftwareID,
+                        principalTable: "Software",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DeviceSoftwareVersions",
+                columns: table => new
+                {
+                    DeviceId = table.Column<long>(nullable: false),
+                    SoftwareVersionId = table.Column<long>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DeviceSoftwareVersions", x => new { x.DeviceId, x.SoftwareVersionId });
+                    table.ForeignKey(
+                        name: "FK_DeviceSoftwareVersions_Devices_DeviceId",
                         column: x => x.DeviceId,
                         principalTable: "Devices",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_DeviceSoftwares_Software_SoftwareId",
-                        column: x => x.SoftwareId,
-                        principalTable: "Software",
+                        name: "FK_DeviceSoftwareVersions_SoftwareVersions_SoftwareVersionId",
+                        column: x => x.SoftwareVersionId,
+                        principalTable: "SoftwareVersions",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_DeviceSoftwares_SoftwareId",
-                table: "DeviceSoftwares",
-                column: "SoftwareId");
+                name: "IX_DeviceSoftwareVersions_SoftwareVersionId",
+                table: "DeviceSoftwareVersions",
+                column: "SoftwareVersionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SoftwareVersions_SoftwareID",
+                table: "SoftwareVersions",
+                column: "SoftwareID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "DeviceSoftwares");
+                name: "DeviceSoftwareVersions");
 
             migrationBuilder.DropTable(
                 name: "Users");
 
             migrationBuilder.DropTable(
                 name: "Devices");
+
+            migrationBuilder.DropTable(
+                name: "SoftwareVersions");
 
             migrationBuilder.DropTable(
                 name: "Software");

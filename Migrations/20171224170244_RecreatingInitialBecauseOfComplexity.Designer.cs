@@ -12,8 +12,8 @@ using System;
 namespace Fyo.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20171223205137_Initial")]
-    partial class Initial
+    [Migration("20171224170244_RecreatingInitialBecauseOfComplexity")]
+    partial class RecreatingInitialBecauseOfComplexity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -46,20 +46,36 @@ namespace Fyo.Migrations
                     b.ToTable("Devices");
                 });
 
-            modelBuilder.Entity("Fyo.Models.DeviceSoftware", b =>
+            modelBuilder.Entity("Fyo.Models.DeviceSoftwareVersion", b =>
                 {
                     b.Property<long>("DeviceId");
 
-                    b.Property<long>("SoftwareId");
+                    b.Property<long>("SoftwareVersionId");
 
-                    b.HasKey("DeviceId", "SoftwareId");
+                    b.HasKey("DeviceId", "SoftwareVersionId");
 
-                    b.HasIndex("SoftwareId");
+                    b.HasIndex("SoftwareVersionId");
 
-                    b.ToTable("DeviceSoftwares");
+                    b.ToTable("DeviceSoftwareVersions");
                 });
 
             modelBuilder.Entity("Fyo.Models.Software", b =>
+                {
+                    b.Property<long>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<DateTime>("ModifiedDate");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Software");
+                });
+
+            modelBuilder.Entity("Fyo.Models.SoftwareVersion", b =>
                 {
                     b.Property<long>("ID")
                         .ValueGeneratedOnAdd();
@@ -70,17 +86,17 @@ namespace Fyo.Migrations
 
                     b.Property<DateTime>("ModifiedDate");
 
-                    b.Property<string>("Name");
+                    b.Property<long?>("SoftwareID");
 
                     b.Property<string>("URL");
-
-                    b.Property<string>("UniqueID");
 
                     b.Property<string>("Version");
 
                     b.HasKey("ID");
 
-                    b.ToTable("Software");
+                    b.HasIndex("SoftwareID");
+
+                    b.ToTable("SoftwareVersions");
                 });
 
             modelBuilder.Entity("Fyo.Models.User", b =>
@@ -107,17 +123,24 @@ namespace Fyo.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("Fyo.Models.DeviceSoftware", b =>
+            modelBuilder.Entity("Fyo.Models.DeviceSoftwareVersion", b =>
                 {
                     b.HasOne("Fyo.Models.Device", "Device")
                         .WithMany()
                         .HasForeignKey("DeviceId")
                         .OnDelete(DeleteBehavior.Cascade);
 
+                    b.HasOne("Fyo.Models.SoftwareVersion", "SoftwareVersion")
+                        .WithMany()
+                        .HasForeignKey("SoftwareVersionId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Fyo.Models.SoftwareVersion", b =>
+                {
                     b.HasOne("Fyo.Models.Software", "Software")
                         .WithMany()
-                        .HasForeignKey("SoftwareId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("SoftwareID");
                 });
 #pragma warning restore 612, 618
         }
