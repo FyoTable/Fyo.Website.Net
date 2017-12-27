@@ -10,7 +10,6 @@ using Fyo.Models;
 
 namespace Fyo.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     public class DeviceController : Controller
     {
@@ -20,6 +19,7 @@ namespace Fyo.Controllers
             _deviceService = deviceService;
         }
 
+        [Authorize]
         [HttpGet]
         [Route("{id}")]
         public IActionResult Get(long id){
@@ -28,6 +28,8 @@ namespace Fyo.Controllers
             return new OkObjectResult(device);
         }
         
+
+        [Authorize]
         [HttpGet]
         public IActionResult GetAll(){
             var devices = _deviceService.GetAll();
@@ -35,6 +37,8 @@ namespace Fyo.Controllers
             return new OkObjectResult(devices);
         }
 
+
+        [Authorize]
         [HttpPost]
         public IActionResult Create([FromBody] Device device){
             device.UniqueIdentifier = Guid.NewGuid();
@@ -43,6 +47,7 @@ namespace Fyo.Controllers
             return new OkObjectResult(newDevice);
         }
 
+        [Authorize]
         [HttpPut]
         [Route("{id}")]
         public IActionResult Update(long id, [FromBody] Device device){
@@ -58,6 +63,38 @@ namespace Fyo.Controllers
             var updatedDevice = _deviceService.Update(existingDevice);
 
             return new OkObjectResult(updatedDevice);
+        }
+
+
+        [HttpGet]
+        [Route("config/{id}")]
+        public IActionResult Config(string id){
+            var device = _deviceService.Get(id);
+            
+            var software = new List<object>();
+            if(device.DeviceSoftwareVersions != null) {
+                foreach(var softVer in device.DeviceSoftwareVersions) {
+                    software.Add(new {
+                        id = softVer.SoftwareVersion.Software.Name,
+                        version = softVer.SoftwareVersion.Version,
+                        apk = softVer.SoftwareVersion.APK,
+                        url = softVer.SoftwareVersion.URL
+                    });
+                }
+            }
+            
+
+            return new OkObjectResult(new {
+                name = device.Name,
+                config = new {
+                    wireless = new {
+                        ap = device.WirelessAccessPoint,
+                        apIP = device.WirelessAccessPointIP,
+                        deviceIP = device.IPAddress
+                    },
+                    software = software.ToArray()
+                }
+            });
         }
 
     }
