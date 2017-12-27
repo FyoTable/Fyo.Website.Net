@@ -6,7 +6,7 @@ if(hostname === 'fyo.azurewebsites.net') {
   backendHost = 'http://fyo.azurewebsites.net';
 } 
 
-if(hostname === 'fyo.io') {
+if(hostname === 'fyo.io' || hostname === 'www.fyo.io') {
   backendHost = 'http://fyo.io';
 }
 
