@@ -70,9 +70,9 @@ namespace Fyo
             
             Console.WriteLine("Env: " + HostingEnvironment.EnvironmentName);
             if(!HostingEnvironment.IsDevelopment() && !HostingEnvironment.IsEnvironment("local")){
-                services.Configure<MvcOptions>(options => {
-                    options.Filters.Add(new RequireHttpsAttribute());
-                });
+                // services.Configure<MvcOptions>(options => {
+                //     options.Filters.Add(new RequireHttpsAttribute());
+                // });
             }
         }
 
