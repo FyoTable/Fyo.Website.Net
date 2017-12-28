@@ -27,9 +27,10 @@ export class DeviceEdit extends React.Component<RouteComponentProps<EditProps>, 
                 console.log(device);
                 this.setState({ originalEntity: device });
 
-                this.deviceDataService.isConnected(device.uniqueIdentifier).then((state: boolean) => {
-                    this.isConnected = state;
-                })
+                this.deviceDataService.isConnected(device.uniqueIdentifier).then((data: any) => {
+                    this.isConnected = data.state;
+                    this.forceUpdate();
+                });
             });
         }
     }
@@ -38,6 +39,19 @@ export class DeviceEdit extends React.Component<RouteComponentProps<EditProps>, 
         this.deviceDataService.update(values);
     }
     
+
+    private sendCommand(cmd: string) {
+        if(!this.state.originalEntity) {
+            return;
+        }
+        this.deviceDataService.command(this.state.originalEntity.uniqueIdentifier, cmd);
+    }
+
+    private sendCommandBinder(cmd: string): ((event: React.MouseEvent<HTMLElement>) => void) {
+        return this.sendCommand.bind(this, cmd);
+    } 
+
+
     public render() {
         if(!this.state.originalEntity){
             return <div>we should put a loading thing here</div>
@@ -76,7 +90,19 @@ export class DeviceEdit extends React.Component<RouteComponentProps<EditProps>, 
                                     <Text className="form-control" field="uniqueIdentifier" id="uniqueIdentifier" />
                                 </div>
 
-                                <button type="submit" className="btn btn-primary">Submit</button>
+                                <button type="submit" className="btn btn-primary">Save</button>
+
+                                <hr />
+
+                                <h3>Commands</h3>
+                                <div className="form-group">
+                                    <a onClick={this.sendCommandBinder("update")} className="btn btn-primary">Update</a>
+                                </div>
+
+                                <div className="form-group">
+                                    <a  onClick={this.sendCommandBinder("reboot")} className="btn btn-primary">Reboot</a>
+                                </div>
+
                             </form>
                         )}
                     </Form>
