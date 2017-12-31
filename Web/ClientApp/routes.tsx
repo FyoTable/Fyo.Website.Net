@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { Auth } from './services';
-import { Callback, AppLayout, Landing, Home, AuthenticatedLayout, DeviceListing, DeviceEdit, DeviceCreate } from './components';
+import { Callback, AppLayout, Landing, Home, AuthenticatedLayout, DeviceListing, DeviceEdit, DeviceCreate, SoftwareListing, SoftwareEdit, SoftwareCreate, SoftwareVersionListing, SoftwareVersionEdit, SoftwareVersionCreate } from './components';
 
 const auth = new Auth();
 
@@ -60,6 +60,12 @@ export const routes =
                     <PrivateRoute exact path='/device' component={ DeviceListing } />
                     <PrivateRoute path='/device/create' component={ DeviceCreate } />
                     <PrivateRoute path='/device/:id' component={ DeviceEdit } />
+                    <PrivateRoute exact path='/software' component={ SoftwareListing } />
+                    <PrivateRoute path='/software/create' component={ SoftwareCreate } />
+                    <PrivateRoute path='/software/:id' component={ SoftwareEdit } />
+                    <PrivateRoute exact path='/softwareversion' component={ SoftwareVersionListing } />
+                    <PrivateRoute path='/softwareversion/create' component={ SoftwareVersionCreate } />
+                    <PrivateRoute path='/softwareversion/:id' component={ SoftwareVersionEdit } />
                 </AuthenticatedLayout>
             </AppLayout>
         </Switch>

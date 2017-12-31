@@ -13,5 +13,12 @@ namespace Fyo.Services {
             return DbSet.FirstOrDefault(c => c.UniqueIdentifier.ToString() == id);
             
         }
+        public SoftwareVersion[] SoftwareVersions(long id) {
+            var device = Get(id);
+            var deviceSoftwareVersionSet = _context.Set<DeviceSoftwareVersion>();
+
+            var mappings = deviceSoftwareVersionSet.Where(dsv => dsv.DeviceId == id).Include(dsv => dsv.SoftwareVersion).Include(dsv => dsv.SoftwareVersion.Software);
+            return mappings.Select(dsv => dsv.SoftwareVersion).ToArray();
+        }
     }
 }           

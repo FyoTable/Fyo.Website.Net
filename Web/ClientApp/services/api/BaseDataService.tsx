@@ -3,7 +3,7 @@ import { Auth } from '../../services';
 import { IHasId } from '../../interfaces'; 
 
 export class BaseDataService<T extends IHasId> {
-    private auth: Auth;
+    protected auth: Auth;
     protected endpointRoot: string;
     protected entityType: string;
 
@@ -52,6 +52,18 @@ export class BaseDataService<T extends IHasId> {
     public create(entity: T): Promise<any>{
         const endpoint = `${this.endpointRoot}`;
         const init = this.buildRequestInit('POST', entity);
+
+        return fetch(endpoint, init).then((response) => {
+            if(response.ok) {
+                return response.json();
+            }
+            throw new Error('Network response was not ok.');
+        })
+    }
+
+    public delete(id: number): Promise<any>{
+        const endpoint = `${this.endpointRoot}/${id}`;
+        const init = this.buildRequestInit('DELETE');
 
         return fetch(endpoint, init).then((response) => {
             if(response.ok) {

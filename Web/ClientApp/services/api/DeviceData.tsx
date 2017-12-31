@@ -40,5 +40,34 @@ export class DeviceDataService extends BaseDataService<Device> {
             throw new Error('Network response was not ok.');
         })
     }
+
+
+
+    public softwareVersions(device: Device): Promise<any>{
+        const endpoint = `${this.endpointRoot}/softwareVersions/${device.id}`;
+        const init = this.buildRequestInit('GET');
+
+        return fetch(endpoint, init).then((response) => {
+            if(response.ok) {
+                return response.json();
+            }
+            throw new Error('Network response was not ok.');
+        })
+    }
+
+
+
+    public addSoftware(device: Device, softwareId: number): Promise<any>{
+        const endpoint = `${this.endpointRoot}/${device.id}/addSoftware/${softwareId}`;
+        const init = this.buildRequestInit('POST');
+
+        return fetch(endpoint, init).then((response) => {
+            if(response.ok) {
+                return response.json();
+            }
+            throw new Error('Network response was not ok.');
+        })
+    }
+    
     
 }

@@ -9,6 +9,9 @@ namespace Fyo.IoC {
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IDeviceService, DeviceService>();
+            services.AddScoped<ISoftwareService, SoftwareService>();
+            services.AddScoped<ISoftwareVersionService, SoftwareVersionService>();
+            services.AddScoped<IDeviceSoftwareVersionService, DeviceSoftwareVersionService>();
         }
     }
 }

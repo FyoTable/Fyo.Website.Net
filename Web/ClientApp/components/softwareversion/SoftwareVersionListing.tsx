@@ -1,47 +1,45 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { ListingState } from '../../interfaces';
-import { Device } from '../../models';
-import { DeviceDataService } from '../../services';
+import { SoftwareVersion } from '../../models';
+import { SoftwareVersionDataService } from '../../services';
 import { NavLink } from 'react-router-dom';
 import { TopNavMenu } from '../navigation/TopNavMenu';
 import { TopNavMenuItem } from '../navigation/TopNavMenuItem';
 
-export class DeviceListing extends React.Component<RouteComponentProps<{}>, ListingState<Device>>{
-    private deviceDataService = new DeviceDataService();
+export class SoftwareVersionListing extends React.Component<RouteComponentProps<{}>, ListingState<SoftwareVersion>>{
+    private softwareVersionDataService = new SoftwareVersionDataService();
 
     constructor(props: RouteComponentProps<{}>){
         super(props);
 
         this.state = { 
-            entities: new Array<Device>(), 
+            entities: new Array<SoftwareVersion>(), 
         };
     }
     
     public componentDidMount() {
-        this.deviceDataService.getAll().then((devices: Device[]) => { 
+        this.softwareVersionDataService.getAll().then((softwareVersions: SoftwareVersion[]) => { 
             this.setState(
-                { entities: devices }
+                { entities: softwareVersions }
             );
         });
     }
 
-    private delete(entity: Device) {
-        var confirmed = confirm(`Are you sure you want to delete ${entity.name}`);
+    private delete(entity: SoftwareVersion) {
+        var confirmed = confirm(`Are you sure you want to delete ${entity.version}`);
 
         if(confirmed){
             console.log('proceed with delete');
-            this.deviceDataService.delete(entity.id).then(() => {
-                this.setState({ 
-                    entities: this.state.entities.filter((device: Device) => {
-                        return device.id != entity.id;
-                    })
-                });
-            });
+            this.setState({ 
+                entities: this.state.entities.filter((software: SoftwareVersion) => {
+                    return software.id != entity.id;
+                })
+            })     
         }
     }
 
-    private deleteBinder(entity: Device): ((event: React.MouseEvent<HTMLElement>) => void) {
+    private deleteBinder(entity: SoftwareVersion): ((event: React.MouseEvent<HTMLElement>) => void) {
         return this.delete.bind(this, entity);
     } 
 
@@ -50,13 +48,13 @@ export class DeviceListing extends React.Component<RouteComponentProps<{}>, List
             
             <TopNavMenu open={true}>
                 <TopNavMenuItem>
-                    <NavLink to={ '/device/create' }><span className="glyphicon glyphicon-plus"></span></NavLink>
+                    <NavLink to={ '/software/create' }><span className="glyphicon glyphicon-plus"></span></NavLink>
                 </TopNavMenuItem>
             </TopNavMenu>
 
             <div className="content-header">
                 <div className="content-container">
-                <h1>Devices</h1>
+                <h1>Software</h1>
                 </div>
             </div>
             
@@ -72,9 +70,9 @@ export class DeviceListing extends React.Component<RouteComponentProps<{}>, List
                     <tbody>
                         {this.state.entities.map((entity, index) => {
                             return <tr key={ index }>
-                                <td>{entity.name}</td>
+                                <td>{entity.version}</td>
                                 <td>
-                                    <NavLink to={ `/device/${entity.id}` }><span className='glyphicon glyphicon-pencil'></span></NavLink>
+                                    <NavLink to={ `/software/${entity.id}` }><span className='glyphicon glyphicon-pencil'></span></NavLink>
                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                     <span onClick={ this.deleteBinder(entity) } className='glyphicon glyphicon-trash'></span>
                                 </td>

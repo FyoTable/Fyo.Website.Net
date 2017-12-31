@@ -5,3 +5,5 @@ export * from './layout/AuthenticatedLayout';
 export * from './Landing';
 export * from './Home';
 export * from './devices';
+export * from './software';
+export * from './softwareversion';

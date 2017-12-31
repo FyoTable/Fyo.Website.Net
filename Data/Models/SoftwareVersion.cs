@@ -5,13 +5,14 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Fyo.Models {
     public class SoftwareVersion : BaseModel {
+        public long SoftwareId { get; set; }
         public Software Software { get; set; }
 
 		public string Version { get; set; }
 
-		public string APK { get; set; }
+		public string Apk { get; set; }
 
-		public string URL { get; set; }
+		public string Url { get; set; }
 
 		List<DeviceSoftwareVersion> DeviceSoftwareVersions { get; set; }
     }
