@@ -40,6 +40,8 @@ namespace Fyo
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
+            
             services.Configure<RazorViewEngineOptions>(o => {  
                 o.ViewLocationExpanders.Add(new MyViewLocationExpander());  
             });  
@@ -82,6 +84,11 @@ namespace Fyo
 
             if (env.IsDevelopment() || env.IsEnvironment("local"))
             {
+                app.UseCors(builder =>
+                    builder.WithOrigins(new string[] { "http://localhost:5000" , "http://localhost:8000" })
+                        .AllowAnyHeader()
+                );
+
                 app.UseDeveloperExceptionPage();
                 app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
                 {

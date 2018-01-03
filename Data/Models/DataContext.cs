@@ -13,6 +13,7 @@ namespace Fyo.Models{
         public DbSet<Software> Software { get; set; }
         public DbSet<SoftwareVersion> SoftwareVersions { get; set; }
         public DbSet<DeviceSoftwareVersion> DeviceSoftwareVersions { get; set; }
+        public DbSet<Code> Codes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

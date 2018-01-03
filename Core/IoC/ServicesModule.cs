@@ -12,6 +12,7 @@ namespace Fyo.IoC {
             services.AddScoped<ISoftwareService, SoftwareService>();
             services.AddScoped<ISoftwareVersionService, SoftwareVersionService>();
             services.AddScoped<IDeviceSoftwareVersionService, DeviceSoftwareVersionService>();
+            services.AddScoped<ICodeService, CodeService>();
         }
     }
 }
