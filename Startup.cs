@@ -84,10 +84,6 @@ namespace Fyo
 
             if (env.IsDevelopment() || env.IsEnvironment("local"))
             {
-                app.UseCors(builder =>
-                    builder.WithOrigins(new string[] { "http://localhost:5000" , "http://localhost:8000" })
-                        .AllowAnyHeader()
-                );
 
                 app.UseDeveloperExceptionPage();
                 app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
@@ -113,6 +109,11 @@ namespace Fyo
 
                 app.UseRewriter(options);
             }
+        
+            app.UseCors(builder =>
+                builder.WithOrigins(new string[] { "http://localhost:5000" , "http://localhost:8000" })
+                    .AllowAnyHeader()
+            );
 
             //app.UseStaticFiles();
             app.UseStaticFiles(new StaticFileOptions() {
