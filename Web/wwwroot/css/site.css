@@ -1,0 +1,19 @@
+
+#main-slider {
+    height: 500px;
+}
+#code-entry {
+    width: 200px;
+    margin: 0 auto;
+}
+@media (max-width: 767px) {
+    .section-padding {
+        padding-top: 0 !important;
+    }
+    .section-padding-mobile {
+        padding-top: 140px !important;
+    }
+    #main-slider {
+        height: 300px;
+    }
+}

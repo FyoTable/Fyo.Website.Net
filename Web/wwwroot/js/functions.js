@@ -9,7 +9,11 @@ jQuery(function($) {'use strict',
 		 $(".loader").fadeOut("slow");
 		 
   });
-	 
+     
+  
+  $('#code-btn').on('click', function() {
+    window.location = '/code/' + $('#code').val();
+  });
 	
    	
 	 
