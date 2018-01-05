@@ -11,13 +11,15 @@ import { Text, Form, Select, FormState, FormApi } from 'react-form';
 import { TopNavMenu } from '../navigation/TopNavMenu';
 import { TopNavMenuItem } from '../navigation/TopNavMenuItem';
 import { version } from 'react';
+import * as io from 'socket.io-client';
 
 interface DeviceEditState {
     originalEntity: Device | undefined;
     softwareVersions: DeviceSoftwareVersion[];
     software: SoftwareListing[];
     selected: number,
-    softwareToAdd: number
+    softwareToAdd: number,
+    latestScreen: string
 }
 interface SoftwareVersionOption {
     label: string;
@@ -37,7 +39,8 @@ export class DeviceEdit extends React.Component<RouteComponentProps<EditProps>, 
             softwareVersions: [],
             software: [],
             selected: -1,
-            softwareToAdd: -1
+            softwareToAdd: -1,
+            latestScreen: ''
         };
     }
 
@@ -48,6 +51,20 @@ export class DeviceEdit extends React.Component<RouteComponentProps<EditProps>, 
             this.deviceDataService.get(id).then((device: Device) => {
                 console.log(device);
                 this.setState({ originalEntity: device });
+
+
+
+                const socket = io('http://mqqt.fyo.io');
+                socket.emit('device', device.uniqueIdentifier);
+                var self = this;
+                socket.on('screenshot', function (data: string) {
+                    console.log(data);
+                    self.setState({
+                        latestScreen: data
+                    });
+                    self.forceUpdate();
+                });
+                socket.emit('capture');
 
                 this.deviceDataService.isConnected(device.uniqueIdentifier).then((data: any) => {
                     this.isConnected = data.state;
@@ -268,6 +285,8 @@ export class DeviceEdit extends React.Component<RouteComponentProps<EditProps>, 
                         </tbody>
                     </table>
                     
+                    <h3>Screen Capture</h3>
+                    <img className="screenshot" src={"data:image/png;base64," + this.state.latestScreen} />
 
 
                 </div>

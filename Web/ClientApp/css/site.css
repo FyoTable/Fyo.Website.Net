@@ -12,7 +12,9 @@ html,body, #react-app {
     -webkit-animation-duration: 0s !important;
     transition:background-color 0s, opacity 0s, color 0s, width 0s, height 0s, padding 0s, margin 0s !important;
 }
-
+.screenshot {
+    width: 100%;
+}
 .main-nav li .glyphicon {
     margin-right: 10px;
 }
