@@ -13,20 +13,8 @@
 
     <h1 style="text-align: center;">Welcome Player @Model.Code.Player</h1>
 
-    <h3 style="text-align: center;">Connect To</h3> 
+    <h3 style="text-align: center;">Connect your phone to the wireless network: "<span>@Model.Device.WirelessAccessPoint</span>"</h3> 
 
-    <div class="wireless">
-        <table>
-            <tr>
-                <td>
-                    <img src="/images/wireless.png" />
-                </td>
-                <td>
-                    <h1>@Model.Device.WirelessAccessPoint</h1> 
-                </td>
-            </tr>
-        </table>
-    </div>
     <br />
 
     <div id="connecting" data-ip="@Model.Device.IPAddress">
