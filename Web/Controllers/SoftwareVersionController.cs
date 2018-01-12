@@ -99,6 +99,7 @@ namespace Fyo.Controllers
 
             var container = cloudBlobClient.GetContainerReference("apks");
 
+            Console.WriteLine("Looking for blob: " + existingSoftwareVersion.Apk);
             var newBlob = container.GetBlockBlobReference(existingSoftwareVersion.Apk);
 
 
