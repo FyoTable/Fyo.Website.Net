@@ -200,7 +200,10 @@ export class DeviceEdit extends React.Component<RouteComponentProps<EditProps>, 
                                     <Text className="form-control" field="uniqueIdentifier" id="uniqueIdentifier" />
                                 </div>
 
-
+                                <div className="form-group">
+                                    <label htmlFor="wirelessAP">Wireless Access Point</label>
+                                    <Text className="form-control" field="wirelessAP" id="wirelessAP" />
+                                </div>
 
                                 <hr />
 

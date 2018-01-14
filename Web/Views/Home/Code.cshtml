@@ -3,6 +3,8 @@
 }
 @model Fyo.Controllers.CodeViewModel;
 
+<link rel="stylesheet" href="/css/code.css" />
+
 <div style="text-align: center; padding: 25px;">
     <img src="/images/fyo.svg", style="width: 100px;" />
 </div>
@@ -13,7 +15,10 @@
 
     <h1 style="text-align: center;">Welcome Player @Model.Code.Player</h1>
 
-    <h3 style="text-align: center;">Connect your phone to the wireless network: "<span>@Model.Device.WirelessAccessPoint</span>"</h3> 
+    <h3 style="text-align: center;">Connect your phone to the wireless network:</h3>
+    <div class="text-center">
+        <img src="/images/wireless.png" style="width: 50px; display: inline; padding-right: 10px;" /><span>Garrett's WiFi Network @Model.Device.WirelessAccessPoint</span>
+    </div>
 
     <br />
 
@@ -21,8 +26,6 @@
 
     </div>
 </div>
-
-<div>Code @Model.Device.Name</div>
 
 <script type="text/javascript" src="/js/fetch.js"></script>
 <script type="text/javascript" src="/js/connect.js"></script>

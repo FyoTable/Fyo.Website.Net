@@ -39,6 +39,13 @@ namespace Fyo.Controllers
         [Route("/code/{code}")]
         public IActionResult Code(string code)
         {
+            if(code == "999") {
+                return View(new CodeViewModel() {
+                    Device = new Device(),
+                    Code = new Code()
+                });
+            }
+
             var c = _codeService.ByCode(code);
             if(c == null) {
                 return Redirect("/");
