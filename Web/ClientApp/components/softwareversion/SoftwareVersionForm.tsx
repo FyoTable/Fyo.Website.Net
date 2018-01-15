@@ -54,7 +54,7 @@ export class SoftwareVersionForm extends React.Component<BaseFormProps>{
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="name">Version</label>
+                            <label htmlFor="name">APK</label>
                             <Text className="form-control" field="apk" id="apk" />
                         </div>
 

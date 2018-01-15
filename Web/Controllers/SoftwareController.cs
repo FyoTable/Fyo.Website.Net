@@ -73,6 +73,7 @@ namespace Fyo.Controllers
 
             existingSoftware.Name = device.Name;
             existingSoftware.IsDeleted = device.IsDeleted;
+            existingSoftware.Package = device.Package;
 
             var updatedSoftware = _softwareService.Update(existingSoftware);
 

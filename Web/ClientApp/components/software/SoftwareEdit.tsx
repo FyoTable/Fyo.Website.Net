@@ -49,6 +49,7 @@ export class SoftwareEdit extends React.Component<RouteComponentProps<EditProps>
     }
 
     private save(values: any){
+        console.log(values);
         this.softwareDataService.update(values);
     }
 
@@ -81,6 +82,11 @@ export class SoftwareEdit extends React.Component<RouteComponentProps<EditProps>
                                 <div className="form-group">
                                     <label htmlFor="name">Name</label>
                                     <Text className="form-control" field="name" id="name" />
+                                </div>
+
+                                <div className="form-group">
+                                    <label htmlFor="name">Package</label>
+                                    <Text className="form-control" field="package" id="package" />
                                 </div>
                                 
 

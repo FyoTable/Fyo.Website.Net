@@ -12,8 +12,6 @@ namespace Fyo.Models {
 
 		public string Apk { get; set; }
 
-		public string Url { get; set; }
-
 		List<DeviceSoftwareVersion> DeviceSoftwareVersions { get; set; }
     }
 }

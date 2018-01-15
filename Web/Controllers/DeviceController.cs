@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Fyo.Enums;
 using Fyo.Interfaces;
 using Fyo.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Fyo.Controllers
 {
@@ -159,7 +160,7 @@ namespace Fyo.Controllers
         public IActionResult Config(string id){
             var device = _deviceService.Get(id);
 
-            var devSoftVer = _deviceSoftwareVersionService.GetAll().Where(d => d.DeviceId == device.ID);
+            var devSoftVer = _deviceSoftwareVersionService.GetAll().Where(d => d.DeviceId == device.ID).Include(x => x.SoftwareVersion.Software);
             
             var software = new List<object>();
             if(devSoftVer != null) {
@@ -168,7 +169,7 @@ namespace Fyo.Controllers
                         id = softVer.SoftwareVersion.Software.Name,
                         version = softVer.SoftwareVersion.Version,
                         apk = softVer.SoftwareVersion.Apk,
-                        url = softVer.SoftwareVersion.Url
+                        package = softVer.SoftwareVersion.Software.Package
                     });
                 }
             }
