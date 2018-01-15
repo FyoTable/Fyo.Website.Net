@@ -64,7 +64,9 @@ export class DeviceEdit extends React.Component<RouteComponentProps<EditProps>, 
                     });
                     self.forceUpdate();
                 });
-                socket.emit('capture');
+                socket.emit('capture', {
+                    device: device.uniqueIdentifier
+                });
 
                 this.deviceDataService.isConnected(device.uniqueIdentifier).then((data: any) => {
                     this.isConnected = data.state;
