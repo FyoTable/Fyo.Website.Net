@@ -9,7 +9,7 @@ export class DeviceDataService extends BaseDataService<Device> {
 
 
 
-    protected buildMqqtRequestInit(method: string): RequestInit {
+    protected buildMqttRequestInit(method: string): RequestInit {
         let requestInit: RequestInit = {
             method: method
         }
@@ -18,8 +18,8 @@ export class DeviceDataService extends BaseDataService<Device> {
     }
 
     public isConnected(id: string): Promise<any>{
-        const endpoint = `http://mqqt.fyo.io/api/v1/${id}/live`;
-        const init = this.buildMqqtRequestInit('GET');
+        const endpoint = `http://mqtt.fyo.io/api/v1/${id}/live`;
+        const init = this.buildMqttRequestInit('GET');
 
         return fetch(endpoint, init).then((response) => {
             if(response.ok) {
@@ -30,8 +30,8 @@ export class DeviceDataService extends BaseDataService<Device> {
     }
 
     public command(id: string, cmd: string): Promise<any>{
-        const endpoint = `http://mqqt.fyo.io/api/v1/${id}/${cmd}`;
-        const init = this.buildMqqtRequestInit('GET');
+        const endpoint = `http://mqtt.fyo.io/api/v1/${id}/${cmd}`;
+        const init = this.buildMqttRequestInit('GET');
 
         return fetch(endpoint, init).then((response) => {
             if(response.ok) {
