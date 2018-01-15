@@ -56,10 +56,10 @@ namespace Fyo.Controllers
                 return new NotFoundObjectResult(false);
             }
 
-            var expiredCodes = _codeService.GetAll().Where(x => x.CreatedDate < DateTime.Now.AddMinutes(-10));
-            foreach(var c in expiredCodes) {
-                _codeService.Delete(c);
-            }
+            // var expiredCodes = _codeService.GetAll().Where(x => x.CreatedDate < DateTime.Now.AddMinutes(-10));
+            // foreach(var c in expiredCodes) {
+            //     _codeService.Delete(c);
+            // }
 
             var digits = "";
             var r = new Random();
