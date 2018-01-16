@@ -19,7 +19,8 @@ interface DeviceEditState {
     software: SoftwareListing[];
     selected: number,
     softwareToAdd: number,
-    latestScreen: string
+    latestScreen: string,
+    socket: SocketIOClient.Socket | null
 }
 interface SoftwareVersionOption {
     label: string;
@@ -40,7 +41,8 @@ export class DeviceEdit extends React.Component<RouteComponentProps<EditProps>, 
             software: [],
             selected: -1,
             softwareToAdd: -1,
-            latestScreen: ''
+            latestScreen: '',
+            socket: null
         };
     }
 
@@ -55,6 +57,10 @@ export class DeviceEdit extends React.Component<RouteComponentProps<EditProps>, 
 
 
                 const socket = io('http://mqtt.fyo.io');
+                this.setState({
+                    socket: socket
+                });
+
                 socket.emit('device', device.uniqueIdentifier);
                 var self = this;
                 socket.on('screenshotData', function (data: string) {
@@ -159,6 +165,20 @@ export class DeviceEdit extends React.Component<RouteComponentProps<EditProps>, 
 
     private changeSoftwareBinder(): ((event: React.FormEvent<HTMLSelectElement>) => void) {
         return this.changeSoftware.bind(this);
+    } 
+
+    private screencapSend() {
+        if(!this.state.socket || !this.state.originalEntity) {
+            return;
+        }
+
+        this.state.socket.emit('capture', {
+            device: this.state.originalEntity.uniqueIdentifier
+        });
+    }
+
+    private screencap(): ((event: React.MouseEvent<HTMLElement>) => void) {
+        return this.screencapSend.bind(this);
     } 
     
 
@@ -290,7 +310,14 @@ export class DeviceEdit extends React.Component<RouteComponentProps<EditProps>, 
                         </tbody>
                     </table>
                     
-                    <h3>Screen Capture</h3>
+                    <div className="row">
+                        <div className="col-xs-8">
+                            <h3>Screen Capture</h3>
+                        </div>
+                        <div className="col-xs-4 text-right">
+                            <a className="btn btn-primary" onClick={this.screencap()}>Capture</a>
+                        </div>
+                    </div>
                     <img className="screenshot" src={"data:image/png;base64," + this.state.latestScreen} />
 
 
