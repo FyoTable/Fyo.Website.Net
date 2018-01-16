@@ -49,7 +49,7 @@ export class AppLayout extends React.Component<any> {
                 <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet" />
                 <link rel="stylesheet" href="/css/site.css" />
                 <SideNavMenu auth={this.auth} open={this.sideMenuOpen} />
-                <div>
+                <div className="react-app-body">
                     { this.props.children }
                 </div>
             </div>
