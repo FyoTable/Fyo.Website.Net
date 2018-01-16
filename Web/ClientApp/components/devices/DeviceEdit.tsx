@@ -57,7 +57,7 @@ export class DeviceEdit extends React.Component<RouteComponentProps<EditProps>, 
                 const socket = io('http://mqtt.fyo.io');
                 socket.emit('device', device.uniqueIdentifier);
                 var self = this;
-                socket.on('screenshot', function (data: string) {
+                socket.on('screenshotData', function (data: string) {
                     console.log(data);
                     self.setState({
                         latestScreen: data
