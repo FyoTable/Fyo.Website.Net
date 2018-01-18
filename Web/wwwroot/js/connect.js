@@ -15,6 +15,9 @@ function AttemptConnect(ip) {
     log = 'Trying to connect';
     output.innerHTML = log;
 
+    var deviceid = document.getElementById('deviceid').getAttribute('value');
+    var playerid = document.getElementById('playerid').getAttribute('value');
+    fetch('http://mqtt.fyo.io/api/v1/' + deviceid + '/connect/' + playerid);
 
     var timer = setTimeout(function() {
         AttemptConnect(ip);

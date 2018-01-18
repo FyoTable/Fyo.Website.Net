@@ -13,6 +13,8 @@
 
 <div style="padding: 25px;">
 
+    <input type="hidden" id="deviceid" value="@Model.Device.UniqueIdentifier.ToString()" />
+    <input type="hidden" id="playerid" value="@Model.Code.Player" />
     <h1 style="text-align: center;">Welcome Player @Model.Code.Player</h1>
 
     <h3 style="text-align: center;">Connect your phone to the wireless network:</h3>
