@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Rewrite;
-using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Converters;
@@ -26,7 +25,7 @@ namespace Fyo
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration, IHostingEnvironment hostingEnvironment, IServiceProvider serviceProvider)
+        public Startup(IConfiguration configuration, Microsoft.AspNetCore.Hosting.IHostingEnvironment hostingEnvironment, IServiceProvider serviceProvider)
         {
             Configuration = configuration;
             HostingEnvironment = hostingEnvironment;
@@ -34,7 +33,7 @@ namespace Fyo
         }
 
         public IConfiguration Configuration { get; }
-        public IHostingEnvironment HostingEnvironment { get; }
+        public Microsoft.AspNetCore.Hosting.IHostingEnvironment HostingEnvironment { get; }
         public IServiceProvider ServiceProvider { get; }
         
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -47,12 +46,14 @@ namespace Fyo
                 o.ViewLocationExpanders.Add(new MyViewLocationExpander());  
             });  
 
-            services.AddMvc()
+            services.AddMvc(o => {
+                o.EnableEndpointRouting = false;
+            })
                 .AddJsonOptions(options => {
-                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                    options.SerializerSettings.Converters.Add(new StringEnumConverter {
-                        CamelCaseText = true
-                    });
+                    // options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                    // options.SerializerSettings.Converters.Add(new StringEnumConverter {
+                    //     CamelCaseText = true
+                    // });
                 });
 
             var connections = Configuration.GetSection("ConnectionStrings");
@@ -80,18 +81,18 @@ namespace Fyo
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, Microsoft.AspNetCore.Hosting.IHostingEnvironment env)
         {
 
             if (env.IsDevelopment() || env.IsEnvironment("local"))
             {
 
                 app.UseDeveloperExceptionPage();
-                app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
-                {
-                    HotModuleReplacement = true,
-                    ReactHotModuleReplacement = true
-                });
+                // app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
+                // {
+                //     HotModuleReplacement = true,
+                //     ReactHotModuleReplacement = true
+                // });
 
                 using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
                 {
@@ -111,6 +112,8 @@ namespace Fyo
                 app.UseRewriter(options);
             }
         
+            app.UseRouting();
+
             app.UseCors(builder =>
                 builder.WithOrigins(new string[] { "http://localhost:5000" , "http://localhost:8000" })
                     .AllowAnyHeader()
@@ -124,10 +127,9 @@ namespace Fyo
             });
 
             app.UseAuthentication();
-
-            app.UseSignalR(routes =>
-            {
-                routes.MapHub<SignalR>("signalr");
+            
+            app.UseEndpoints(endpoints =>  {
+                endpoints.MapHub<SignalR>("/signalr");
             });
 
             app.UseMvc(routes =>

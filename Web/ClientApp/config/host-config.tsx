@@ -7,7 +7,7 @@ if(hostname === 'fyo.azurewebsites.net') {
 } 
 
 if(hostname === 'fyo.io' || hostname === 'www.fyo.io') {
-  backendHost = 'http://fyo.io';
+  backendHost = 'https://fyo.io';
 }
 
 export const HOST_ROOT = backendHost;

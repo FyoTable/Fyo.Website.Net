@@ -9,7 +9,7 @@ namespace Fyo
         public Task Screenshot()
         {
             Console.WriteLine("Screenshot from SignalR");
-            return Clients.All.InvokeAsync("Screenshot");
+            return Clients.All.SendAsync("Screenshot");
         }
     }
 }
