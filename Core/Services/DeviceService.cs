@@ -13,6 +13,7 @@ namespace Fyo.Services {
             return DbSet.FirstOrDefault(c => c.UniqueIdentifier.ToString() == id);
             
         }
+
         public SoftwareVersion[] SoftwareVersions(long id) {
             var device = Get(id);
             var deviceSoftwareVersionSet = _context.Set<DeviceSoftwareVersion>();

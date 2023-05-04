@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
 using Microsoft.AspNetCore.Http;
+using System.Text.Json.Serialization;
 
 namespace Fyo
 {
@@ -50,6 +51,8 @@ namespace Fyo
                 o.EnableEndpointRouting = false;
             })
                 .AddJsonOptions(options => {
+                    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+                    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
                     // options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                     // options.SerializerSettings.Converters.Add(new StringEnumConverter {
                     //     CamelCaseText = true
