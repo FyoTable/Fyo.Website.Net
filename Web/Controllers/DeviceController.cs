@@ -8,6 +8,7 @@ using Fyo.Enums;
 using Fyo.Interfaces;
 using Fyo.Models;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace Fyo.Controllers
 {
@@ -105,7 +106,7 @@ namespace Fyo.Controllers
         public IActionResult SoftwareVersions(long id) {
             var versions = _deviceService.SoftwareVersions(id).OrderByDescending(x => x.ID);
 
-            var result = new List<DeviceSoftwareVersionViewModel>();
+            var result = new List<object>();
 
             foreach(var version in versions) {
                 Console.WriteLine("Version: " + version.ID + " : " + version.SoftwareId);
@@ -122,7 +123,7 @@ namespace Fyo.Controllers
                     id = sv.ID,
                     version = sv.Version
                 }).OrderByDescending(x => x.id).ToArray();
-                result.Add(r);
+                result.Add(JsonConvert.SerializeObject(r));
             }
 
             return new OkObjectResult(result.ToArray());
