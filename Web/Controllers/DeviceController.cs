@@ -13,16 +13,16 @@ using Newtonsoft.Json;
 namespace Fyo.Controllers
 {
     public struct VersionViewModel {
-        public long id;
-        public string version;
+        public long id { get; set; }
+        public string version { get; set; }
     }
 
     public class DeviceSoftwareVersionViewModel {
-        public long id;
-        public long softwareId;
-        public string softwareName;
-        public string version;
-        public VersionViewModel[] allVersions;
+        public long id { get; set; }
+        public long softwareId { get; set; }
+        public string softwareName { get; set; }
+        public string version { get; set; }
+        public VersionViewModel[] allVersions { get; set; }
     }
 
     [Route("api/[controller]")]
@@ -106,7 +106,7 @@ namespace Fyo.Controllers
         public IActionResult SoftwareVersions(long id) {
             var versions = _deviceService.SoftwareVersions(id).OrderByDescending(x => x.ID);
 
-            var result = new List<object>();
+            var result = new List<DeviceSoftwareVersionViewModel>();
 
             foreach(var version in versions) {
                 Console.WriteLine("Version: " + version.ID + " : " + version.SoftwareId);
@@ -123,7 +123,7 @@ namespace Fyo.Controllers
                     id = sv.ID,
                     version = sv.Version
                 }).OrderByDescending(x => x.id).ToArray();
-                result.Add(JsonConvert.SerializeObject(r));
+                result.Add(r);
             }
 
             return new OkObjectResult(result.ToArray());
